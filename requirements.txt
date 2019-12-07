@@ -1,0 +1,5 @@
+bokeh
+Flask
+numpy
+pandas
+gunicorn
