@@ -35,7 +35,8 @@ def sepal_dim(df):
             y='sepal_width',
             color='color',
             alpha=0.7,
-            hover_alpha=0,
+            hover_alpha=0.35,
+            size=10,
             source=source
             )
         p.add_tools(hover)
@@ -49,17 +50,49 @@ def sepal_dim(df):
     p_Setosa.x_range = p_Versicolor.x_range = p_Virginica.x_range
     p_Setosa.y_range = p_Versicolor.y_range = p_Virginica.y_range
 
-    layout = row(p_Setosa, p_Versicolor, p_Virginica)
+    return row(p_Setosa, p_Versicolor, p_Virginica)
 
-    return layout
+
+def petal_dim(df):
+    def petal_dim_plot(df_class):
+        source = ColumnDataSource(df_class)
+        hover = HoverTool(tooltips=[('petal length','@petal_length'), ('petal width','@petal_width')])
+        p = figure(
+            title=df_class.iris_class.unique().tolist().pop(),
+            x_axis_label='petal length',
+            y_axis_label='petal width',
+            plot_width=380,
+            plot_height=380,
+        )
+        p.circle(
+            x='petal_length',
+            y='petal_width',
+            color='color',
+            alpha=0.7,
+            hover_alpha=0.35,
+            size=10,
+            source=source
+            )
+        p.add_tools(hover)
+
+        return p
+
+    p_Setosa = petal_dim_plot(df_Setosa)
+    p_Versicolor = petal_dim_plot(df_Versicolor)
+    p_Virginica = petal_dim_plot(df_Virginica)
+
+    p_Setosa.x_range = p_Versicolor.x_range = p_Virginica.x_range
+    p_Setosa.y_range = p_Versicolor.y_range = p_Virginica.y_range
+
+    return row(p_Setosa, p_Versicolor, p_Virginica)
 
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    sepal_dim_chart = sepal_dim(df)
-    script, div = components(sepal_dim_chart)
+    dim_chart = column(sepal_dim(df), petal_dim(df))
+    script, div = components(dim_chart)
 
     return render_template('index.html', script=script,  div=div)
 
