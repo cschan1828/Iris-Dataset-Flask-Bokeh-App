@@ -11,11 +11,11 @@ from flask import Flask, render_template, request
 
 df = pd.read_csv('data/iris.csv')
 
-df_Setosa = df.loc[df.iris_class=='Setosa']
+df_Setosa = df.loc[df.iris_class=='Setosa'].copy()
 df_Setosa['color'] = 'firebrick'
-df_Versicolor = df.loc[df.iris_class=='Versicolor']
+df_Versicolor = df.loc[df.iris_class=='Versicolor'].copy()
 df_Versicolor['color'] = 'limegreen'
-df_Virginica = df.loc[df.iris_class=='Virginica']
+df_Virginica = df.loc[df.iris_class=='Virginica'].copy()
 df_Virginica['color'] = 'deepskyblue'
 
 
