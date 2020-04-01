@@ -97,5 +97,10 @@ def index():
     return render_template('index.html', script=script,  div=div)
 
 
+@app.route('/datatable', methods=['GET'])
+def iris_datatable():
+    return render_template('datatable.html', json=df.to_json(orient='records'))
+
+
 if __name__ == '__main__':
     app.run()

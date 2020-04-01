@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% include 'navbar.html' %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script>var iris_data = {{ json|safe }};</script>
+<script src="{{ url_for('static', filename="js/makeTable.js")}}"></script>
+<div id='highlighted'>Nothing Highlighted</div>
+<div id='selected'>Nothing Selected</div>
+<div id='container'></div>
+
+<script>
+var table_plot = makeTable()
+  .datum(iris_data);
+
+d3.select('#container').call(table_plot);
+
+table_plot.on('highlight', function(data, on_off){
+  if(on_off){//if the data is highlighted
+    d3.select('#highlighted').text(
+      'Oops, I just move over iris ' + data.iris_class
+    );
+  }
+});
+table_plot.on('select', function(data, on_off){
+  if(on_off){//if the data is highlighted
+    d3.select('#selected').text(
+      'And it was the chosen ' + data.iris_class
+    );
+  }
+});
+</script>
+{% endblock %}
