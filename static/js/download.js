@@ -20,12 +20,14 @@ button.addEventListener ("click", function() {
     csv = csv.join('\r\n');
 
     // Make it downloadable
-    var encodedUri = encodeURI(csv);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement("a");    
+    link.setAttribute("href", url);
     link.setAttribute("download", "iris_data.csv");
-    
+
     // Required for FF
     document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
 });
