@@ -7,6 +7,7 @@
 <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
 <script>var iris_data = {{ json|safe }};</script>
 <script src="{{ url_for('static', filename="js/makeTable.js")}}"></script>
+<script src="{{ url_for('static', filename="js/download.js")}}"></script>
 <div id='highlighted'>Nothing Highlighted</div>
 <div id='selected'>Nothing Selected</div>
 <div id='container'></div>
