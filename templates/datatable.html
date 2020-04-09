@@ -2,9 +2,11 @@
 {% include 'navbar.html' %}
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.foundation.min.js"></script>
 
 <div class="container" style="width: 50%; margin-top: 20px;">
   {{ table|safe }}
@@ -13,7 +15,7 @@
 <script>
 $(document).ready(function() {
     $('#iris').DataTable( {
-      "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "All"]]
+      "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
     });
 } );
 </script>

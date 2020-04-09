@@ -103,7 +103,7 @@ def index():
 @app.route('/datatable', methods=['GET'])
 def iris_datatable():
     if request.method == 'GET':
-        return render_template('datatable.html', table=df.to_html(table_id="iris", index=False), json=df.to_json(orient='records'))
+        return render_template('datatable.html', table=df.to_html(table_id="iris", index=False, classes="display"))
 
 
 if __name__ == '__main__':
