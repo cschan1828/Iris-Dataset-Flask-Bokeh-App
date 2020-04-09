@@ -8,6 +8,7 @@ from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import figure
 
 from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
 
 df = pd.read_csv('data/iris.csv')
 
@@ -88,18 +89,21 @@ def petal_dim(df):
 
 
 app = Flask(__name__)
+Bootstrap(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    dim_chart = column(sepal_dim(df), petal_dim(df))
-    script, div = components(dim_chart)
-
-    return render_template('index.html', script=script,  div=div)
+    if request.method == 'GET':
+        dim_chart = column(sepal_dim(df), petal_dim(df))
+        script, div = components(dim_chart)
+        
+        return render_template('index.html', script=script,  div=div)
 
 
 @app.route('/datatable', methods=['GET'])
 def iris_datatable():
-    return render_template('datatable.html', json=df.to_json(orient='records'))
+    if request.method == 'GET':
+        return render_template('datatable.html', table=df.to_html(table_id="iris", index=False), json=df.to_json(orient='records'))
 
 
 if __name__ == '__main__':
