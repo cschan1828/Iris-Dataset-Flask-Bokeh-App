@@ -2,21 +2,33 @@
 {% include 'navbar.html' %}
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.foundation.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.foundation.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 
 <div class="container" style="width: 50%; margin-top: 20px;">
-  {{ table|safe }}
+	{{ table|safe }}
 </div>
 
 <script>
 $(document).ready(function() {
-    $('#iris').DataTable( {
-      "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]]
-    });
+	var table = $('#iris').DataTable( {
+		"lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				extend: 'csvHtml5',
+				title: 'export',
+				text: '<i class="fa fa-file-text-o"></i>',
+				titleAttr: 'CSV'
+			}
+		]
+	} );
 } );
 </script>
 {% endblock %}
