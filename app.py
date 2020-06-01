@@ -7,7 +7,7 @@ from bokeh.layouts import column, gridplot, layout, row
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import figure
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_bootstrap import Bootstrap
 
 df = pd.read_csv('data/iris.csv')
@@ -103,7 +103,13 @@ def index():
 @app.route('/datatable', methods=['GET'])
 def iris_datatable():
     if request.method == 'GET':
-        return render_template('datatable.html', table=df.to_html(table_id="iris", index=False, classes="display"))
+        return render_template('datatable.html', data=df)
+
+
+@app.route('/iris/data', methods=['GET'])
+def get_iris():
+
+    return df.to_json(orient='records')
 
 
 if __name__ == '__main__':

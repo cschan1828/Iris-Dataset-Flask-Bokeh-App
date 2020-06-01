@@ -22,11 +22,41 @@
 </style>
 
 <div class="flex-container">
-	{{ table|safe }}
+	<table id="iris" class="display">
+		<thead>
+			<tr>
+				{% for c in data.columns.values %}
+				<th>{{ c }}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+		{% for _, row in data.iterrows() %}
+		<tr>
+			{% for v in row %}
+			<td>
+				{{ v }}
+			</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				{% for c in data.columns.values %}
+				<th>{{ c }}</th>
+				{% endfor %}
+			</tr>
+		</tfoot>
+	</table>
 </div>
 
 <script>
 $(document).ready(function() {
+    $('#iris tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search" />' );
+    } );
 	var table = $('#iris').DataTable( {
 		colReorder: true,
 		stateSave:  true, // enable state saving, when the end user reloads or revisits a page its previous state is retained.
@@ -39,7 +69,22 @@ $(document).ready(function() {
 				text: '<i class="fa fa-file-text-o"></i>',
 				titleAttr: 'CSV'
 			}
-		]
+		],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+
 	} );
 } );
 </script>
