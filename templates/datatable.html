@@ -16,12 +16,16 @@
 .flex-container {
 	display: flex;
 	justify-content: center;
-	margin-top: 20px;
+	margin-top: 60px;
+}
+input {
+	border-radius: 7px;
+	border-width: 1px;
 }
 </style>
 
 <div class="flex-container">
-	<table id="iris" class="display">
+	<table id="iris" class="display compact">
 		<thead>
 			<tr>
 				{% for c in data.columns.values %}
@@ -57,15 +61,18 @@ $(document).ready(function() {
         $(this).html( '<input type="text" placeholder="Search" />' );
     } );
 	var table = $('#iris').DataTable( {
+		scrollY: '60vh',
+		paging: false,
+		scrollCollapse: true,
 		colReorder: true,
 		stateSave:  true, // enable state saving, when the end user reloads or revisits a page its previous state is retained.
-		"lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+		"autoWidth": true,
 		dom: 'Bfrtip',
 		buttons: [
 			{
 				extend: 'csvHtml5',
 				title: 'export',
-				text: '<i class="fa fa-file-text-o"></i>',
+				text: '<i class="fa fa-download" aria-hidden="true"></i>',
 				titleAttr: 'CSV'
 			}
 		],
