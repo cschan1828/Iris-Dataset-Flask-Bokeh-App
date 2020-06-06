@@ -29,7 +29,7 @@ input {
 		<thead>
 			<tr>
 				{% for c in data.columns.values %}
-				<th>{{ c }}</th>
+				<th>{{ c | upper | replace("_"," ") }}</th>
 				{% endfor %}
 			</tr>
 		</thead>
